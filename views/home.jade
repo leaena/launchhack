@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Choose your itinerary to start autoblogging.
   p.lead
-    form.form-horizontal(role='form', method='POST')
+    form.form-horizontal(role='form', action='/setItinerary' method='POST')
       input(type='hidden', name='_csrf', value=token)
       .form-group
         label(for='sdate') Start Date
