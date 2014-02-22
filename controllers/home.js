@@ -9,3 +9,9 @@ exports.index = function(req, res) {
     index: true
   });
 };
+
+exports.submitItinerary = function(req, res) {
+  console.log(req.body);
+  res.redirect('/itinerary');
+};
+
