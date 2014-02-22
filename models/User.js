@@ -3,13 +3,8 @@ var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
 
 var userSchema = new mongoose.Schema({
-  email: { type: String, unique: true },
+  username: { type: String, unique: true },
   password: String,
-
-  facebook: { type: String, unique: true, sparse: true },
-  twitter: { type: String, unique: true, sparse: true },
-  google: { type: String, unique: true, sparse: true },
-  github: { type: String, unique: true, sparse: true },
   tokens: Array,
 
   profile: {

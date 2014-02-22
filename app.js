@@ -19,6 +19,7 @@ var homeController = require('./controllers/home');
 var campsiteController = require('./controllers/campsiteList');
 var itineraryController = require('./controllers/itinerary');
 var todayController = require('./controllers/today');
+var accountController = require('./controllers/account');
 // var userController = require('./controllers/user');
 // var apiController = require('./controllers/api');
 // var contactController = require('./controllers/contact');
@@ -102,7 +103,9 @@ app.use(express.errorHandler());
  */
 
 app.get('/', homeController.index);
-app.post('/setItinerary', homeController.submitItinerary)
+app.post('/setItinerary', accountController.checkAccount);
+// app.get('/createAccount', userController.getSignup);
+// app.post('/createAccount', userController.postSignup);
 app.get('/itinerary/:username', itineraryController.index);
 app.get('/today/:username/:date', todayController.index);
 // app.get('/login', userController.getLogin);
