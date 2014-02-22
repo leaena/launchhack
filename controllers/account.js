@@ -25,7 +25,21 @@ var checkUsername = function(req, res){
         edate: req.body.edate,
         northsouth: req.body.northsouth
       });
-      console.log(user);
+
+      var diffDays = function(firstDate,secondDate) {
+        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+        console.log("first",firstDate.getTime());
+        console.log("second",secondDate.getTime());
+        // Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+        return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+      };
+
+      var sdate = new Date(req.body.sdate);
+      var edate = new Date(req.body.edate);
+      console.log("checking date difference",diffDays(edate,sdate));
+      // console.log(sdate,typeof sdate);
+      // console.log(edate,typeof edate);
+
       user.save( function(error, data){
           if(error){
               res.json(error);
