@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
-  // Place JavaScript code here...
-
+  $(button).on('click', function(e){
+    e.preventDefault();
+    window.location = "/itinerary";
+  });
 });

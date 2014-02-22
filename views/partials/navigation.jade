@@ -7,12 +7,13 @@
         span.icon-bar
         span.icon-bar
       a.navbar-brand(href='/') AutoBlogger
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
-        li(class=title=='Itinerary'?'active':undefined)
-          a(href='/itinerary') Itinerary
-        li(class=title=='Today'?'active':undefined)
-          a(href='/today') Today
+    if !index
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li(class=title=='Itinerary'?'active':undefined)
+            a(href='/itinerary') Itinerary
+          li(class=title=='Today'?'active':undefined)
+            a(href='/today') Today
         //- li(class=title=='Contact'?'active':undefined)
         //-   a(href='/contact') Contact
       //- ul.nav.navbar-nav.navbar-right

@@ -11,8 +11,7 @@ html
     != js('application')
   body
     #wrap
-      if !index
-        include partials/navigation
+      include partials/navigation
       .container
         include partials/flash
         block content
