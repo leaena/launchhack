@@ -16,6 +16,7 @@ var connectAssets = require('connect-assets');
  */
 
 var homeController = require('./controllers/home');
+<<<<<<< HEAD
 var campsiteController = require('./controllers/campsiteList');
 var itineraryController = require('./controllers/itinerary');
 var todayController = require('./controllers/today');
@@ -172,15 +173,6 @@ app.get('/today/:username/:date', todayController.index);
 // app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '/api' }), function(req, res) {
 //   res.redirect('/api/venmo');
 // });
-
-/**
-* Campsite routes for elevation data. Other DB calls.
-// */
-// var mongo = require('mongodb');
-// var monk = require('monk');
-// var db = monk('localhost:27017/nodetest1');
-// app.get('/campsiteList', campsiteController.campsiteList(mongoose.connection.db));
-
 
 /*
 user = usercontroller
