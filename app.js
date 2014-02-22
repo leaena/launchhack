@@ -3,10 +3,10 @@
  */
 
 var express = require('express');
-var MongoStore = require('connect-mongo')(express);
+// var MongoStore = require('connect-mongo')(express);
 var flash = require('express-flash');
 var path = require('path');
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 var passport = require('passport');
 var expressValidator = require('express-validator');
 var connectAssets = require('connect-assets');
@@ -21,6 +21,7 @@ var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var forgotController = require('./controllers/forgot');
 var resetController = require('./controllers/reset');
+var campsiteController = require('./controllers/campsiteList');
 
 /**
  * API keys + Passport configuration.
@@ -39,10 +40,11 @@ var app = express();
  * Mongoose configuration.
  */
 
-mongoose.connect(secrets.db);
-mongoose.connection.on('error', function() {
-  console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
-});
+// mongoose.connect(secrets.db);
+// // mongoose.connect('localhost:27017/launchhack');
+// mongoose.connection.on('error', function() {
+//   console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
+// });
 
 /**
  * Express configuration.
@@ -70,10 +72,10 @@ app.use(expressValidator());
 app.use(express.methodOverride());
 app.use(express.session({
   secret: secrets.sessionSecret,
-  store: new MongoStore({
-    db: mongoose.connection.db,
-    auto_reconnect: true
-  })
+  // store: new MongoStore({
+  //   db: mongoose.connection.db, 
+  //   auto_reconnect: true
+  // })
 }));
 app.use(express.csrf());
 app.use(passport.initialize());
@@ -163,6 +165,18 @@ app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '
   res.redirect('/api/venmo');
 });
 
+/**
+* Campsite routes for elevation data. Other DB calls.
+// */
+// var mongo = require('mongodb');
+// var monk = require('monk');
+// var db = monk('localhost:27017/nodetest1');
+// app.get('/campsiteList', campsiteController.campsiteList(mongoose.connection.db));
+
+
+/*
+user = usercontroller
+*/
 /**
  * Start Express server.
  */
