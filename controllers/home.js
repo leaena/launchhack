@@ -5,6 +5,14 @@
 
 exports.index = function(req, res) {
   res.render('home', {
-    title: 'Home'
+    title: 'Home',
+    index: true
   });
 };
+
+exports.submitItinerary = function(req, res) {
+  console.log(req.body);
+  req.body.name = req.body.name || 'demo';
+  res.redirect('/itinerary/' + req.body.name);
+};
+

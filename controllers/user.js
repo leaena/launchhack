@@ -78,7 +78,6 @@ exports.getSignup = function(req, res) {
  */
 
 exports.postSignup = function(req, res, next) {
-  req.assert('email', 'Email is not valid').isEmail();
   req.assert('password', 'Password must be at least 4 characters long').len(4);
   req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
 
@@ -86,11 +85,11 @@ exports.postSignup = function(req, res, next) {
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/signup');
+    return res.redirect('/createAccount');
   }
 
   var user = new User({
-    email: req.body.email,
+    username: req.body.username,
     password: req.body.password
   });
 
@@ -99,11 +98,11 @@ exports.postSignup = function(req, res, next) {
       if (err.code === 11000) {
         req.flash('errors', { msg: 'User with that email already exists.' });
       }
-      return res.redirect('/signup');
+      return res.redirect('/createAccount');
     }
     req.logIn(user, function(err) {
       if (err) return next(err);
-      res.redirect('/');
+      res.redirect('/itinerary');
     });
   });
 };
