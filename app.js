@@ -103,8 +103,8 @@ app.use(express.errorHandler());
 
 app.get('/', homeController.index);
 app.post('/setItinerary', homeController.submitItinerary)
-app.get('/itinerary', itineraryController.index);
-app.get('/today', todayController.index);
+app.get('/itinerary/:username', itineraryController.index);
+app.get('/today/:username/:date', todayController.index);
 // app.get('/login', userController.getLogin);
 // app.post('/login', userController.postLogin);
 // app.get('/logout', userController.logout);

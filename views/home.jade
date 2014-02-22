@@ -1,10 +1,13 @@
 extends layout
 
 block content
-  h1 Choose your itinerary to start autoblogging.
-  p.lead
+  .col-md-offset-1
+    h1 Choose your itinerary to start autoblogging.
     form.form-horizontal(role='form', action='/setItinerary' method='POST')
       input(type='hidden', name='_csrf', value=token)
+      .form-group
+        label(for='name') What's your name?
+          input.form-control(type='text', name='name', id='name')
       .form-group
         label(for='sdate') Start Date
           input.form-control(type='date', name='sdate', id='sdate')
