@@ -16,7 +16,6 @@ var connectAssets = require('connect-assets');
  */
 
 var homeController = require('./controllers/home');
-<<<<<<< HEAD
 var campsiteController = require('./controllers/campsiteList');
 var itineraryController = require('./controllers/itinerary');
 var todayController = require('./controllers/today');
