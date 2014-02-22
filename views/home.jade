@@ -3,6 +3,22 @@ extends layout
 block content
   h1 Bootstrap starter template
   p.lead
-    | Use this document as a way to quickly start any new project.
-    br
-    | All you get is this text and a mostly barebones HTML document.
+    form.form-horizontal(role='form', method='POST')
+      .form-group
+        label(class='control-label', for='sdate') Start Date
+          input.form-control(type='date', name='sdate', id='sdate', autofocus=true)
+      .form-group
+        label(class='control-label', for='edate') End Date
+          input.form-control(type='date', name='edate', id='edate')
+      .form-group
+        label(class='control-label', for='northsouth') Choose Direction
+          br
+          input(type='radio', name='northsouth', value='ns')
+          | North to South
+          br
+          input(type='radio', name='northsouth', value='sn')
+          | South to North
+      .form-group
+          button.btn.btn-default(type='submit')
+            i.fa.fa-mail-forward
+            | Generate
