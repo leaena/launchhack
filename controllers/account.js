@@ -9,14 +9,28 @@ var User = require('../models/User');
  */
 
 exports.checkAccount = function(req, res){
+  function endAfterStart(start,end){
+    return new Date(start.split('/').reverse().join('/')) <
+            new Date(end.split('/').reverse().join('/'));
+  }
+
+  req.assert
+  req.assert('name', 'Name required.').notEmpty();
+  req.assert('edate', 'Start date must be before end date.').dateRange(req.body.sdate);
+  req.assert('northsouth', 'You must choose a direction.').notEmpty();
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('errors', errors);
+    return res.redirect('/');
+  }
   req.body.name = req.body.name || 'demo';
   checkUsername(req, res);
 }
 
 var checkUsername = function(req, res){
   User.find({username: req.body.name}, function(e, user){
-    console.log(user);
-    console.log(req.body);
     if(e) console.log(e);
     if(user.length === 0){
       var user = new User({
@@ -25,7 +39,6 @@ var checkUsername = function(req, res){
         edate: req.body.edate,
         northsouth: req.body.northsouth
       });
-      console.log(user);
       user.save( function(error, data){
           if(error){
               res.json(error);
@@ -35,9 +48,22 @@ var checkUsername = function(req, res){
           }
       });
     } else {
-      reg.body.name = req.body.name +
-      res.redirect('/');
-      //username already in use
+      var date = Math.floor(new Date().getTime() / 1000);
+      req.body.name = req.body.name + date;
+      var user = new User({
+        username: req.body.name,
+        sdate: req.body.sdate,
+        edate: req.body.edate,
+        northsouth: req.body.northsouth
+      });
+      user.save( function(error, data){
+          if(error){
+              res.json(error);
+          }
+          else {
+            res.redirect('/itinerary/' + req.body.name);
+          }
+      });
     }
   });
 };
