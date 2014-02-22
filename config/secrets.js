@@ -1,5 +1,5 @@
 module.exports = {
-  db: 'mongodb://localhost/test',
+  db: 'mongodb://localhost/launch',
 
   localAuth: true,
   sessionSecret: "Your Session Secret goes here",

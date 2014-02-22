@@ -3,10 +3,10 @@
  */
 
 var express = require('express');
-// var MongoStore = require('connect-mongo')(express);
+var MongoStore = require('connect-mongo')(express);
 var flash = require('express-flash');
 var path = require('path');
-// var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var passport = require('passport');
 var expressValidator = require('express-validator');
 var connectAssets = require('connect-assets');
@@ -20,7 +20,7 @@ var campsiteController = require('./controllers/campsiteList');
 var itineraryController = require('./controllers/itinerary');
 var todayController = require('./controllers/today');
 var accountController = require('./controllers/account');
-// var userController = require('./controllers/user');
+var userController = require('./controllers/user');
 // var apiController = require('./controllers/api');
 // var contactController = require('./controllers/contact');
 // var forgotController = require('./controllers/forgot');
@@ -43,11 +43,11 @@ var app = express();
  * Mongoose configuration.
  */
 
-// mongoose.connect(secrets.db);
+mongoose.connect(secrets.db);
 // // mongoose.connect('localhost:27017/launchhack');
-// mongoose.connection.on('error', function() {
-//   console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
-// });
+mongoose.connection.on('error', function() {
+  console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
+});
 
 /**
  * Express configuration.
@@ -75,10 +75,10 @@ app.use(expressValidator());
 app.use(express.methodOverride());
 app.use(express.session({
   secret: secrets.sessionSecret,
-  // store: new MongoStore({
-  //   db: mongoose.connection.db,
-  //   auto_reconnect: true
-  // })
+  store: new MongoStore({
+    db: mongoose.connection.db,
+    auto_reconnect: true
+  })
 }));
 app.use(express.csrf());
 app.use(passport.initialize());
@@ -104,7 +104,7 @@ app.use(express.errorHandler());
 
 app.get('/', homeController.index);
 app.post('/setItinerary', accountController.checkAccount);
-// app.get('/createAccount', userController.getSignup);
+// app.get('/createAccount', accountController.getSignup);
 // app.post('/createAccount', userController.postSignup);
 app.get('/itinerary/:username', itineraryController.index);
 app.get('/today/:username/:date', todayController.index);

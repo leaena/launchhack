@@ -10,16 +10,36 @@ var User = require('../models/User');
 
 exports.checkAccount = function(req, res){
   req.body.name = req.body.name || 'demo';
-  if(checkUsername(req.body.name)){
-    res.redirect('/login');
-  } else {
-    res.redirect('/createAccount');
-  }
+  checkUsername(req, res);
 }
 
-var checkUsername = function(req){
-  console.log(req);
-  return false;
+var checkUsername = function(req, res){
+  User.find({username: req.body.name}, function(e, user){
+    console.log(user);
+    console.log(req.body);
+    if(e) console.log(e);
+    if(user.length === 0){
+      var user = new User({
+        username: req.body.name,
+        sdate: req.body.sdate,
+        edate: req.body.edate,
+        northsouth: req.body.northsouth
+      });
+      console.log(user);
+      user.save( function(error, data){
+          if(error){
+              res.json(error);
+          }
+          else {
+            res.redirect('/itinerary/' + req.body.name);
+          }
+      });
+    } else {
+      console.log("already in use", user);
+      res.redirect('/');
+      //username already in use
+    }
+  });
 };
 
 /**
@@ -28,6 +48,7 @@ var checkUsername = function(req){
  */
 
 exports.getLogin = function(req, res) {
+
   res.render('account/login', {
     title: 'Login'
   });
@@ -72,12 +93,14 @@ exports.postLogin = function(req, res, next) {
  * Signup page.
  */
 
-exports.getSignup = function(req, res) {
-  if (req.user) return res.redirect('/');
-  res.render('account/signup', {
-    title: 'Create Account'
-  });
-};
+// exports.getSignup = function(req, res) {
+//   console.log(req.params.username);
+//   if (req.user) return res.redirect('/');
+//   res.render('account/signup', {
+//     title: 'Create Account',
+//     username: req.params.username
+//   });
+// };
 
 /**
  * POST /signup
@@ -86,32 +109,32 @@ exports.getSignup = function(req, res) {
  * @param password
  */
 
-exports.postSignup = function(req, res, next) {
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+// exports.postSignup = function(req, res, next) {
+//   req.assert('password', 'Password must be at least 4 characters long').len(4);
+//   req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
 
-  var errors = req.validationErrors();
+//   var errors = req.validationErrors();
 
-  if (errors) {
-    req.flash('errors', errors);
-    return res.redirect('/createAccount');
-  }
+//   if (errors) {
+//     req.flash('errors', errors);
+//     return res.redirect('/createAccount');
+//   }
 
-  var user = new User({
-    username: req.body.username,
-    password: req.body.password
-  });
+//   var user = new User({
+//     username: req.body.username,
+//     password: req.body.password
+//   });
 
-  user.save(function(err) {
-    if (err) {
-      if (err.code === 11000) {
-        req.flash('errors', { msg: 'User with that email already exists.' });
-      }
-      return res.redirect('/createAccount');
-    }
-    req.logIn(user, function(err) {
-      if (err) return next(err);
-      res.redirect('/itinerary');
-    });
-  });
-};
+//   user.save(function(err) {
+//     if (err) {
+//       if (err.code === 11000) {
+//         req.flash('errors', { msg: 'User with that email already exists.' });
+//       }
+//       return res.redirect('/createAccount');
+//     }
+//     req.logIn(user, function(err) {
+//       if (err) return next(err);
+//       res.redirect('/itinerary');
+//     });
+//   });
+// };
