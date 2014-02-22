@@ -12,6 +12,7 @@ exports.index = function(req, res) {
 
 exports.submitItinerary = function(req, res) {
   console.log(req.body);
-  res.redirect('/itinerary');
+  req.body.name = req.body.name || 'demo';
+  res.redirect('/itinerary/' + req.body.name);
 };
 
