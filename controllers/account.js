@@ -35,7 +35,7 @@ var checkUsername = function(req, res){
           }
       });
     } else {
-      console.log("already in use", user);
+      reg.body.name = req.body.name +
       res.redirect('/');
       //username already in use
     }
