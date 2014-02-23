@@ -9,6 +9,8 @@ A new user shares the start and end dates for their trip and the app generates a
 
 Each morning, a scrapbook-style blog entry is generated using recent and seasonally appropriate trip reports from the relevant section of the trail, selected writings from the exact area from the legendary nature writers, ranger reports, weather data, and so on.
 
+![Example blog entry](/public/img/blogpage.jpg "Example daily entry")
+
 Eventual optimizations include a social component to help plan resupplies and the ability to upload video updates on civilization days.
 
 ## Tech Stack ##
