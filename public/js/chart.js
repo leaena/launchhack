@@ -1,33 +1,36 @@
 var data; // a global
 
 var username = window.location.pathname;
-//console.log(username.slice(11));
-
 
 d3.json("/campsiteData.json", function(error, json) {
 
   if (error)  console.log(error);
     data = json.campsiteData;
-  
-  
-  
 
-
-
-
-
-var w = 900;
-var h = 450;
-var margin = 20;
-
-var ymax = 13000;
-var xmax = 300;
-
-y = d3.scale.linear().domain([0, ymax]).range([0 + margin, h - margin]),
-x = d3.scale.linear().domain([0, xmax]).range([0 + margin, w - margin])
-$("#chart").append("<div class='infobox' style='display:none;'>Test</div>");
+  var url = ""+username+"/userCampsite";
+  d3.json(url, function(error, json){
+      if (error)  console.log(error);
  
+      for(var i = 0; i < json.length; i++){
+        for(var j = 0; j < data.length; j++) {
+          if(data[j].campsiteName === json[i]){            
+            data[j].visited = true;          
+          }
+        }       
+      }
 
+    var w = 960;
+    var h = 510;
+    var margin = 30;
+    
+
+    var ymin = 3000;
+    var ymax = 13000;
+    var xmax = 300;
+
+    y = d3.scale.linear().domain([0, ymax]).range([0 + margin, h - margin]),
+    x = d3.scale.linear().domain([0, xmax]).range([0 + margin, w - margin])
+ 
 var vis = d3.select(".lead")
     .append("svg:svg")
     .attr("width", w)
@@ -38,8 +41,7 @@ var g = vis.append("svg:g")
 
 var line = d3.svg.line()
     .x(function(d,i) { return x(d.milesFromSouth) })
-    .y(function(d) { return -1 * y(d.elevation); })
-
+    .y(function(d) { return -1 * y(d.elevation); });
 
 g.append("svg:path").attr("d", line(data));
 
@@ -62,7 +64,7 @@ g.selectAll(".xLabel")
     .text(String)
     .attr("x", function(d) { return x(d) })
     .attr("y", 0)
-    .attr("text-anchor", "middle")
+    .attr("text-anchor", "right")
  
 g.selectAll(".yLabel")
     .data(y.ticks(2))
@@ -96,12 +98,19 @@ g.selectAll(".yTicks")
 
 function xx(d) { return x(d.milesFromSouth); };
 function yy(d) { return -1 * y(d.elevation); };
-console.log("all colored blue");
+
  g
  .selectAll("circle")
  .data(data)
  .enter().append("circle")
- .attr("fill", "steelblue")
+ 
+ .attr("fill", function(d) {
+    if(d.visited)  {
+      return "red";
+    }
+    else return "steelblue";
+ })
+ .attr("fill-opacity", 100)
  .attr("r", 5)
  .attr("cx", xx)
  .attr("cy", yy)
@@ -109,42 +118,17 @@ console.log("all colored blue");
  .on("mouseclick", function(d) {console.log(d.campsiteName);})
  .on("mouseout", function(){ hideData();});
 
-  // Visited campsites
-  var url = ""+username+"/userCampsite";
-  d3.json(url, function(error, json){
-      if (error)  console.log(error);
-     // console.log("user itinerary = ", json); 
-      // json has user itinerary campsiteName
-      // data has all campsiteName
-      var results = [];
-      for(var i = 0; i < json.length; i++){
-        for(var j = 0; j < data.length; j++) {
-          if(data[j].campsiteName === json[i]){
-            results.push(data[j]);
-          }
-        }
-      }
-     // console.log(results);
-     //console.log(g);
-     console.log("some colored black");
-    g
-     .selectAll("circle")
-     .data(results)
-     .enter().append("circle")
-     .attr("fill", "black")
-     .attr("r", 5)
-     .attr("cx", xx)
-     .attr("cy", yy)
-     .on("mouseover", function(d) { showData(this, d.campsiteName);})
-     .on("mouseclick", function(d) {console.log(d.campsiteName);})
-     .on("mouseout", function(){ hideData();});
+g
+ .selectAll("circle")
+ .data(data)
+ .enter()
+.append("text")
+ .attr("text-anchor", "middle")
+     .text(function(d) {
+       return d.campsiteName;
+      })
 
-
-  });
-
-  
-
- 
+    
  g.append("svg:path").attr("d", line(data));
  g.append("svg:text")
  .attr("x", -200)
@@ -152,7 +136,6 @@ console.log("all colored blue");
  .attr("dy", ".1em")
  .attr("transform", "rotate(-90)")
  .text("Elevation");
- 
 
 function showData(obj, d) {
  var coord = d3.mouse(obj);
@@ -169,7 +152,7 @@ function hideData() {
  $(".infobox").hide();
  }
 
-
+});
 
 });
 
