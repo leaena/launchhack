@@ -26,7 +26,6 @@ exports.checkAccount = function(req, res){
     req.flash('errors', errors);
     return res.redirect('/');
   }
-  req.body.name = req.body.name || 'demo';
   checkUsername(req, res);
 }
 
@@ -62,49 +61,36 @@ var createItinerary = function(req){
   return itineraryArray;
 };
 
+var createUser = function(req, res){
+  var itineraryArray = createItinerary(req);
+
+  var user = new User({
+    username: req.body.name,
+    sdate: req.body.sdate,
+    edate: req.body.edate,
+    northsouth: req.body.northsouth,
+    itinerary: itineraryArray
+  });
+
+  user.save( function(error, data){
+      if(error){
+          res.json(error);
+      }
+      else {
+        res.redirect('/itinerary/' + req.body.name);
+      }
+  });
+};
+
 var checkUsername = function(req, res){
   User.find({username: req.body.name}, function(e, user){
     if(e) console.log(e);
     if(user.length === 0){
-
-      var itineraryArray = createItinerary(req);
-
-      var user = new User({
-        username: req.body.name,
-        sdate: req.body.sdate,
-        edate: req.body.edate,
-        northsouth: req.body.northsouth,
-        itinerary: itineraryArray
-      });
-
-      user.save( function(error, data){
-          if(error){
-              res.json(error);
-          }
-          else {
-            res.redirect('/itinerary/' + req.body.name);
-          }
-      });
+      createUser(req, res);
     } else {
       var date = Math.floor(new Date().getTime() / 1000);
       req.body.name = req.body.name + date;
-      var itineraryArray = createItinerary(req);
-
-      var user = new User({
-        username: req.body.name,
-        sdate: req.body.sdate,
-        edate: req.body.edate,
-        northsouth: req.body.northsouth,
-        itinerary: itineraryArray
-      });
-      user.save( function(error, data){
-          if(error){
-              res.json(error);
-          }
-          else {
-            res.redirect('/itinerary/' + req.body.name);
-          }
-      });
+      createUser(req, res);
     }
   });
 };
