@@ -2,27 +2,33 @@ extends layout
 
 block content
   .col-md-offset-1
-    h1 Choose your itinerary to start autoblogging.
-    form.form-horizontal(role='form', action='/setItinerary' method='POST')
-      input(type='hidden', name='_csrf', value=token)
-      .form-group
-        label(for='name') What's your name?
-          input.form-control(type='text', name='name', id='name')
-      .form-group
-        label(for='sdate') Start Date
-          input.form-control(type='date', name='sdate', id='sdate')
-      .form-group
-        label(for='edate') End Date
-          input.form-control(type='date', name='edate', id='edate')
-      .form-group
-        label(for='northsouth') Choose Direction
-          br
-          input(type='radio', name='northsouth', value='true')
-          |  North to South
-          br
-          input(type='radio', name='northsouth', value='false')
-          |  South to North
-      .form-group
-          button.btn.btn-default(type='submit')
-            i.fa.fa-mail-forward
-            | Generate
+    h1 Welcome! Let's go play outside. 
+    .row
+      .col-xs-3.blog
+        form.form-horizontal(role='form', action='/setItinerary' method='POST')
+          input(type='hidden', name='_csrf', value=token)
+          .form-group
+            label(for='name') What's your name?
+              input.form-control(type='text', name='name', id='name')
+          .form-group
+            label(for='sdate') Start Date
+              input.form-control(type='date', name='sdate', id='sdate')
+          .form-group
+            label(for='edate') End Date
+              input.form-control(type='date', name='edate', id='edate')
+          .form-group
+            label(for='northsouth') Choose Direction
+              br
+              input(type='radio', name='northsouth', value='true')
+              | North to South
+              br
+              input(type='radio', name='northsouth', value='false')
+              | South to North
+          .form-group
+              button.btn.btn-default(type='submit')
+                i.fa.fa-mail-forward
+                | Generate
+
+      .col-xs-9
+        p
+        img.img-responsive(src="photos/halfdome.jpg")

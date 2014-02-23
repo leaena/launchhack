@@ -15,8 +15,6 @@ exports.index = function(req, res) {
     var elevation, miles, tripReportUrl, tripReportFile;
     var prevPossible = true;
     var nextPossible = true;
-    //OK now look for that campsite name in the campsite array in order to find the index
-    //"photoUrl":"http://www.flickr.com/photos/windwalkerimages/351370565/","photoFile":2},
     for (var i=0 ; i<campsites.campsiteData.length ; i++) {
       if (campsites.campsiteData[i].campsiteName === campsiteName) {
         elevation = campsites.campsiteData[i].elevation;
@@ -28,6 +26,8 @@ exports.index = function(req, res) {
         }
         tripReportUrl = campsites.campsiteData[i].tripReport;
         tripReportFile = campsites.campsiteData[i].tripReportFile;
+        photoUrl = campsites.campsiteData[i].photoUrl;
+        photoFile = campsites.campsiteData[i].photoFile;
         if (parseInt(req.params.date) === 1) {
           prevPossible = false;
         }
@@ -49,7 +49,9 @@ exports.index = function(req, res) {
       tripReportUrl: tripReportUrl,
       tripReportFile: tripReportFile,
       nextPossible: nextPossible,
-      prevPossible: prevPossible
+      prevPossible: prevPossible,
+      photoUrl: photoUrl,
+      photoFile: photoFile
     }});
   });
 };
