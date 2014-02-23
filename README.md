@@ -16,7 +16,7 @@ Eventual optimizations include a social component to help plan resupplies and th
 
 ## Tech Stack ##
 
-[Hackathon Starter](https://david-dm.org/sahat/hackathon-starter): Node/Express, D3, HTML/jade, MongoDB.
+[Hackathon Starter](https://david-dm.org/sahat/hackathon-starter): Node/Express, D3, HTML/jade, MongoDB. See our original mockups [here](/public/img/mockup1.jpg), [here](/public/img/mockup2.jpg), and [here](/public/img/mockup3.jpg). 
 
 ## License ##
 
