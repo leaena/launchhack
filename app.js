@@ -114,6 +114,8 @@ app.get('/itinerary/:username', itineraryController.index);
 // app.get('/today/:username/:date', todayController.index);
 app.get('/day/:username/:date', dayController.index);
 app.get('/blog/:username/:date', todayController.index);
+
+app.get('/itinerary/:username/userCampsite', userController.getCampsites);
 // app.get('/login', userController.getLogin);
 // app.post('/login', userController.postLogin);
 // app.get('/logout', userController.logout);

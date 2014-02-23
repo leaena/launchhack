@@ -170,6 +170,15 @@ exports.postUpdatePassword = function(req, res, next) {
   });
 };
 
+exports.getCampsites = function(req, res, next){
+  User.find({username:req.params.username},function(err,user){
+    if (err) return next(err);
+    var itinerary = user[0].itinerary;
+
+    res.json(itinerary);
+  });
+};
+
 /**
  * POST /account/delete
  * Delete user account.
@@ -206,3 +215,5 @@ exports.getOauthUnlink = function(req, res, next) {
     });
   });
 };
+
+
