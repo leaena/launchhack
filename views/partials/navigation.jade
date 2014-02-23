@@ -6,11 +6,11 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='/') AutoBlogger
+      a.navbar-brand(href='/') JMT Blogger
     if !index
       .collapse.navbar-collapse
         ul.nav.navbar-nav
           li(class=title=='Itinerary'?'active':undefined)
             a(href='/itinerary/#{username}') Itinerary
           li(class=title=='Today'?'active':undefined)
-            a(href='/today/#{username}/1') Today
+            a(href='/blog/#{username}/today') Blog
