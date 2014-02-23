@@ -22,10 +22,6 @@ var todayController = require('./controllers/today');
 var dayController = require('./controllers/day');
 var accountController = require('./controllers/account');
 var userController = require('./controllers/user');
-// var apiController = require('./controllers/api');
-// var contactController = require('./controllers/contact');
-// var forgotController = require('./controllers/forgot');
-// var resetController = require('./controllers/reset');
 
 /**
  * API keys + Passport configuration.
@@ -45,7 +41,6 @@ var app = express();
  */
 
 mongoose.connect(secrets.db);
-// // mongoose.connect('localhost:27017/launchhack');
 mongoose.connection.on('error', function() {
   console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
 });
@@ -99,17 +94,26 @@ app.use(function(req, res) {
 });
 app.use(express.errorHandler());
 
+//Custom expressValidator for start and end date.
+expressValidator.Validator.prototype.dateRange = function(start) {
+  //You could validate against this.str, instead of just erroring out.
+  if(new Date(start) < new Date(this.str)){
+    return this;
+  }
+  this.error(this.msg);
+  return this;
+};
+
 /**
  * Application routes.
  */
 
 app.get('/', homeController.index);
 app.post('/setItinerary', accountController.checkAccount);
-// app.get('/createAccount', accountController.getSignup);
-// app.post('/createAccount', userController.postSignup);
 app.get('/itinerary/:username', itineraryController.index);
-app.get('/today/:username/:date', todayController.index);
+// app.get('/today/:username/:date', todayController.index);
 app.get('/day/:username/:date', dayController.index);
+app.get('/blog/:username/:date', todayController.index);
 // app.get('/login', userController.getLogin);
 // app.post('/login', userController.postLogin);
 // app.get('/logout', userController.logout);
