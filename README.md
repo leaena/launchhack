@@ -12,11 +12,14 @@ Each morning, a scrapbook-style blog entry is generated using recent and seasona
 ![Example blog entry](/public/img/blogpage.jpg "Example daily entry")
 ![Example blog entry](/public/img/blog2.jpg "Example daily entry")
 
-Eventual optimizations include a social component to help plan resupplies and the ability to upload video updates on civilization days.
 
 ## Tech Stack ##
 
 [Hackathon Starter](https://david-dm.org/sahat/hackathon-starter): Node/Express, D3, HTML/jade, MongoDB. See our original mockups [here](/public/img/mockup1.jpg), [here](/public/img/mockup2.jpg), and [here](/public/img/mockup3.jpg). 
+
+## Future Plans ##
+
+Eventual optimizations include a social component to help plan resupplies and the ability to upload video updates on civilization days. The campsite data could also be included in a Mongo collection instead of called as a JSON object. On the itinerary page, a "share" button could allow input of a lit of email addresses with whom the user wishes to share their personalized link. The D3 map could allow dragging to modify the itinerary after initial generation. 
 
 ## License ##
 
