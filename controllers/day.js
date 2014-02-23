@@ -18,12 +18,12 @@ exports.index = function(req, res) {
     for (var i=0 ; i<campsites.campsiteData.length ; i++) {
       if (campsites.campsiteData[i].campsiteName === campsiteName) {
         elevation = campsites.campsiteData[i].elevation;
-        // console.log(obj[0].northsouth);
-        // if (!obj[0].northsouth) {
-        //   miles = campsites.campsiteData[i].milesFromSouth;
-        // } else {
+        console.log(obj[0].northsouth);
+        if (!obj[0].northsouth) {
+          miles = campsites.campsiteData[i].milesFromSouth;
+        } else {
           miles = (211.4 - campsites.campsiteData[i].milesFromSouth).toFixed(1);
-        // }
+        }
         tripReportUrl = campsites.campsiteData[i].tripReport;
         tripReportFile = campsites.campsiteData[i].tripReportFile;
         photoUrl = campsites.campsiteData[i].photoUrl;
