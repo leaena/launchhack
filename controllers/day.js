@@ -10,7 +10,6 @@ exports.index = function(req, res) {
   User.find({username:req.params.username},function(err,obj){
   	if (err) {console.error(err);}
     var itinerary = obj[0].itinerary;
-    console.log(obj[0]);
     var campsiteName = itinerary[req.params.date-1];
     // var milesFromSouth
     var elevation, miles, tripReportUrl, tripReportFile;
@@ -31,9 +30,13 @@ exports.index = function(req, res) {
         if (parseInt(req.params.date) === 1) {
           prevPossible = false;
         }
-        if (parseInt(req.params.date) === campsites.campsiteData.length-1 ) {nextPossible = false;}
+        if (parseInt(req.params.date) === itinerary.length ) {
+          nextPossible = false;
+          console.log("too big");
+        }
       }
     }
+    console.log("nextPossible",req.params.date, itinerary.length);
 
     res.render('day', { infos: {
       title: req.params.date,
