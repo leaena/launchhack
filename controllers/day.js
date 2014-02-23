@@ -14,6 +14,8 @@ exports.index = function(req, res) {
     var campsiteName = itinerary[req.params.date-1];
     // var milesFromSouth
     var elevation, miles, tripReportUrl, tripReportFile;
+    var prevPossible = true;
+    var nextPossible = true;
     //OK now look for that campsite name in the campsite array in order to find the index
     //"photoUrl":"http://www.flickr.com/photos/windwalkerimages/351370565/","photoFile":2},
     for (var i=0 ; i<campsites.campsiteData.length ; i++) {
@@ -26,9 +28,12 @@ exports.index = function(req, res) {
         }
         tripReportUrl = campsites.campsiteData[i].tripReport;
         tripReportFile = campsites.campsiteData[i].tripReportFile;
+        if (parseInt(req.params.date) === 1) {
+          prevPossible = false;
+        }
+        if (parseInt(req.params.date) === campsites.campsiteData.length-1 ) {nextPossible = false;}
       }
     }
-    console.log(tripReportFile);
 
     res.render('day', { infos: {
       title: req.params.date,
@@ -38,7 +43,9 @@ exports.index = function(req, res) {
       elevation:elevation,
       miles: miles,
       tripReportUrl: tripReportUrl,
-      tripReportFile: tripReportFile
+      tripReportFile: tripReportFile,
+      nextPossible: nextPossible,
+      prevPossible: prevPossible
     }});
   });
 };

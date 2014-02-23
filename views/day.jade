@@ -33,6 +33,17 @@ block content
         p
         a(href="#{infos.tripReportUrl}") Read more
 
+        center
+          if infos.prevPossible
+            button.btn.btn-default
+              a(href="/day/#{infos.username}/#{infos.date-1}")
+                | Previous
+
+          if infos.nextPossible
+            button.btn.btn-default
+              a(href="/day/#{infos.username}/#{parseInt(infos.date)+1}")
+                | Next
+
       .col-xs-6
         img.img-responsive(src="/photos/#{infos.date}.jpg")
 
