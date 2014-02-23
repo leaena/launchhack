@@ -26,77 +26,71 @@ exports.checkAccount = function(req, res){
     req.flash('errors', errors);
     return res.redirect('/');
   }
-  req.body.name = req.body.name || 'demo';
   checkUsername(req, res);
 }
+
+var createItinerary = function(req){
+  var diffDays = function(firstDate,secondDate) {
+    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+    return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+  };
+
+  var sdate = new Date(req.body.sdate);
+  var edate = new Date(req.body.edate);
+  var howManySites = campsites.campsiteData.length;
+  var howManyDays = diffDays(edate,sdate);
+
+  var itineraryArray = [];
+  if (!req.body.northsouth) {
+    var i=0;
+    for (var j=1; j< howManyDays; j++) {
+      while (campsites.campsiteData[i].milesFromSouth < j*211.4/howManyDays) {
+        i++;
+      }
+      itineraryArray.push(campsites.campsiteData[i].campsiteName);
+    }
+  } else {
+    var i=howManySites-1;
+    for (var j=howManyDays-1; j>0; j--) {
+      while (campsites.campsiteData[i].milesFromSouth > j*211.4/howManyDays) {
+        i--;
+      }
+      itineraryArray.push(campsites.campsiteData[i].campsiteName);
+    }
+  }
+  return itineraryArray;
+};
+
+var createUser = function(req, res){
+  var itineraryArray = createItinerary(req);
+
+  var user = new User({
+    username: req.body.name,
+    sdate: req.body.sdate,
+    edate: req.body.edate,
+    northsouth: req.body.northsouth,
+    itinerary: itineraryArray
+  });
+
+  user.save( function(error, data){
+      if(error){
+          res.json(error);
+      }
+      else {
+        res.redirect('/itinerary/' + req.body.name);
+      }
+  });
+};
 
 var checkUsername = function(req, res){
   User.find({username: req.body.name}, function(e, user){
     if(e) console.log(e);
     if(user.length === 0){
-
-      var diffDays = function(firstDate,secondDate) {
-        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-        return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-      };
-
-      var sdate = new Date(req.body.sdate);
-      var edate = new Date(req.body.edate);
-      var howManySites = campsites.campsiteData.length;
-      var howManyDays = diffDays(edate,sdate);
-
-      var itineraryArray = [];
-      if (!req.body.northsouth) {
-        var i=0;
-        for (var j=1; j< howManyDays; j++) {
-          while (campsites.campsiteData[i].milesFromSouth < j*211.4/howManyDays) {
-            i++;
-          }
-          itineraryArray.push(campsites.campsiteData[i].campsiteName);
-        }
-      } else {
-        var i=howManySites-1;
-        for (var j=howManyDays-1; j>0; j--) {
-          while (campsites.campsiteData[i].milesFromSouth > j*211.4/howManyDays) {
-            i--;
-          }
-          itineraryArray.push(campsites.campsiteData[i].campsiteName);
-        }
-      }
-
-      var user = new User({
-        username: req.body.name,
-        sdate: req.body.sdate,
-        edate: req.body.edate,
-        northsouth: req.body.northsouth,
-        itinerary: itineraryArray
-      });
-
-      user.save( function(error, data){
-          if(error){
-              res.json(error);
-          }
-          else {
-            res.redirect('/itinerary/' + req.body.name);
-          }
-      });
+      createUser(req, res);
     } else {
       var date = Math.floor(new Date().getTime() / 1000);
       req.body.name = req.body.name + date;
-      var user = new User({
-        username: req.body.name,
-        sdate: req.body.sdate,
-        edate: req.body.edate,
-        northsouth: req.body.northsouth
-      });
-      user.save( function(error, data){
-          if(error){
-              res.json(error);
-          }
-          else {
-            res.redirect('/itinerary/' + req.body.name);
-          }
-      });
+      createUser(req, res);
     }
   });
 };
