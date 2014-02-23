@@ -5,8 +5,11 @@
  var User = require('../models/User');
 
 exports.index = function(req, res) {
-  console.log(req.params.username);
-  console.log(User.find({username:req.params.username},function(err,obj){console.log("BANANA",err,obj);}));
+  // console.log("ITINERARY ARRAY: ",req.params.itinerary);
+  User.find({username:req.params.username},function(err,obj){
+  	if (err) {console.error(err);}
+  	console.log(obj[0].itinerary);
+  });
   res.render('day', {
     title: req.params.date,
     username: req.params.username,
