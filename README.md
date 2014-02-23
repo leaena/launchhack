@@ -1,5 +1,5 @@
 # John Muir Trail Auto-Blogger #
-The JMT auto-blogger is a single-page web app providing a full daily blog with minimal startup and zero ongoing effort for long-distance hikers. Make your family and friends feel included on your journey without needing internet connectivity on the trail. This project was implemented by the Acyclic Directed Giraffes ([katemonkeys], [leaena], [pbarchana]) for the LAUNCH Hackathon in San Francisco, CA, Feb 21-23, 2014.
+The JMT auto-blogger is a single-page web app providing a full daily blog with minimal startup and zero ongoing effort for long-distance hikers. Make your family and friends feel included on your journey without needing internet connectivity on the trail. This project was implemented by the Acyclic Directed Giraffes ([katemonkeys](), [leaena](), [pbarchana]()) for the LAUNCH Hackathon in San Francisco, CA, Feb 21-23, 2014.
 
 ## How it Works ##
 
