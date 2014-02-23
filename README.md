@@ -1,11 +1,14 @@
 # Marmot Creek Journaling #
 Marmot Creek Journaling provides a full daily blog for long-distance hikers of the John Muir Trail with minimal startup and zero ongoing effort. Make your family and friends feel included on your journey without needing internet connectivity on the trail. This project was implemented by the Acyclic Directed Giraffes ([Kate Jenkins](https://github.com/katemonkeys), [Lindsey Smith](https://github.com/leaena), [Archana Balagondar](https://github.com/pbarchana)) for the LAUNCH Hackathon in San Francisco, CA, Feb 21-23, 2014.
 
+It is live on [Heroku](marmotcreek.herokuapp.com).
+
 ## How it Works ##
 
 A new user shares the start and end dates for their trip and the app generates a custom itinerary, proposing roughly equidistant campsites for the ~2-3 week trip. These campsites can be changed or updated, and layover days can be included. Once the itinerary is finalized, you can go on your trip and not worry about keeping in touch. 
 
 ![Account creation](/public/img/welcomescreen.jpg "Account creation page")
+![Automatic Itinerary](/public/img/itinerary.jpg "Itinerary generation")
 
 Each morning, a scrapbook-style blog entry is generated using recent and seasonally appropriate trip reports from the relevant section of the trail, selected writings from the exact area from the legendary nature writers, ranger reports, weather data, and so on.
 
