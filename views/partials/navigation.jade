@@ -12,6 +12,6 @@
       .collapse.navbar-collapse
         ul.nav.navbar-nav
           li(class=title=='Itinerary'?'active':undefined)
-            a(href='/itinerary/#{username}') Itinerary
+            a(href='/itinerary/#{infos.username}') Itinerary
           li(class=title=='Today'?'active':undefined)
-            a(href="/day/#{username}/1") Blog
+            a(href="/day/#{infos.username}/1") Blog
