@@ -104,6 +104,15 @@ expressValidator.Validator.prototype.dateRange = function(start) {
   return this;
 };
 
+//Custom expressValidator for future start date.
+expressValidator.Validator.prototype.futureDate = function() {
+   if(new Date(this.str) >= new Date()){
+    return this;
+   }
+   this.error(this.msg);
+   return this;
+}
+
 /**
  * Application routes.
  */
@@ -111,7 +120,6 @@ expressValidator.Validator.prototype.dateRange = function(start) {
 app.get('/', homeController.index);
 app.post('/setItinerary', accountController.checkAccount);
 app.get('/itinerary/:username', itineraryController.index);
-// app.get('/today/:username/:date', todayController.index);
 app.get('/day/:username/:date', dayController.index);
 app.get('/blog/:username/:date', todayController.index);
 
@@ -184,6 +192,7 @@ app.get('/itinerary/:username/userCampsite', userController.getCampsites);
 /*
 user = usercontroller
 */
+
 /**
  * Start Express server.
  */

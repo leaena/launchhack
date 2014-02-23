@@ -1,5 +1,5 @@
 module.exports = {
-  db: 'mongodb://localhost/launch',
+  db: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/launch',
 
   localAuth: true,
   sessionSecret: "Your Session Secret goes here",
