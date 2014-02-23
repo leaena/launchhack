@@ -1,6 +1,7 @@
 var passport = require('passport');
 var _ = require('underscore');
 var User = require('../models/User');
+var campsites = require('../models/campsiteData');
 
 /**
  * POST /checkAccount
@@ -32,12 +33,48 @@ var checkUsername = function(req, res){
   User.find({username: req.body.name}, function(e, user){
     if(e) console.log(e);
     if(user.length === 0){
+
+      var diffDays = function(firstDate,secondDate) {
+        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+        return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+      };
+
+      var sdate = new Date(req.body.sdate);
+      var edate = new Date(req.body.edate);
+      console.log("Trip will last ",diffDays(edate,sdate)," days");
+      //So the itinerary needs diffDays - 1 number of campsites or one every 211.4/diffDays miles.
+      // console.log("of this many campsites",campsites.campsiteData.length); //110
+      var howManySites = campsites.campsiteData.length;
+      var howManyDays = diffDays(edate,sdate);
+
+      var itineraryArray = [];
+      //if they are going south to north (or "northsouth:false"), the mileage values are true. 
+      if (!req.body.northsouth) {
+        var i=0;
+        for (var j=1; j< howManyDays; j++) {
+          while (campsites.campsiteData[i].milesFromSouth < j*211.4/howManyDays) {
+            i++;        
+          }
+          itineraryArray.push(campsites.campsiteData[i].campsiteName);
+        }
+      } else {
+        var i=howManySites-1;
+        for (var j=howManyDays-1; j>0; j--) {
+          while (campsites.campsiteData[i].milesFromSouth > j*211.4/howManyDays) {
+            i--;        
+          }
+          itineraryArray.push(campsites.campsiteData[i].campsiteName);
+        }        
+      }
+
       var user = new User({
         username: req.body.name,
         sdate: req.body.sdate,
         edate: req.body.edate,
-        northsouth: req.body.northsouth
+        northsouth: req.body.northsouth,
+        itinerary: itineraryArray
       });
+
       user.save( function(error, data){
           if(error){
               res.json(error);
