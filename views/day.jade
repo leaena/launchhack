@@ -1,18 +1,49 @@
 extends layout
 
 block content
-  h1 Today
-  .row
-    .col-xs-6.blog
-      p The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ in their grammar, their pronunciation and their most common words. Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators.
+  #infos
+    h1 Day #{infos.date} &mdash; #{infos.campsiteName}
+    .row
+      .col-xs-6.blog
+        p
+        .distance
+          p 
+          i Altitude: #{infos.elevation} ft.
+          p 
+          i Total distance so far: #{infos.miles} miles.
+        .weather
+          p
+          i.fa.fa-sun-o  
+          i Sunny! 
+        p
 
-      p To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words. If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages. The new common language will be more simple and regular than the existing European languages.
+        case infos.tripReportFile
+          when 1
+            include reports/1
+          when 2
+            include reports/2
+          when 3
+            include reports/3
+          when 4
+            include reports/4
+          when 5
+            include reports/5
+          when 6
+            include reports/6
+        p
+        a(href="#{infos.tripReportUrl}") Read more
 
-    .col-xs-6
-      img.img-responsive(src="/photos/2.jpg")
-      p
-      .distance
-        p Distance traveled: #.
-        p Altitude: #.
-      .weather
-        i.fa.fa-sun-o  Sunny!
+        center
+          if infos.prevPossible
+            button.btn.btn-default
+              a(href="/day/#{infos.username}/#{infos.date-1}")
+                | Previous
+
+          if infos.nextPossible
+            button.btn.btn-default
+              a(href="/day/#{infos.username}/#{parseInt(infos.date)+1}")
+                | Next
+
+      .col-xs-6
+        img.img-responsive(src="/photos/#{infos.date}.jpg")
+

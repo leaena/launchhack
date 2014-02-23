@@ -41,14 +41,10 @@ var checkUsername = function(req, res){
 
       var sdate = new Date(req.body.sdate);
       var edate = new Date(req.body.edate);
-      console.log("Trip will last ",diffDays(edate,sdate)," days");
-      //So the itinerary needs diffDays - 1 number of campsites or one every 211.4/diffDays miles.
-      // console.log("of this many campsites",campsites.campsiteData.length); //110
       var howManySites = campsites.campsiteData.length;
       var howManyDays = diffDays(edate,sdate);
 
       var itineraryArray = [];
-      //if they are going south to north (or "northsouth:false"), the mileage values are true. 
       if (!req.body.northsouth) {
         var i=0;
         for (var j=1; j< howManyDays; j++) {
