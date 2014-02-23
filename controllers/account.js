@@ -17,6 +17,7 @@ exports.checkAccount = function(req, res){
   req.body.northsouth = req.body.northsouth || false;
   req.assert('name', 'Name required.').notEmpty();
   req.assert('edate', 'Start date must be before end date.').dateRange(req.body.sdate);
+  req.assert('sdate', 'Start date must be in the future.').futureDate();
   req.assert('northsouth', 'You must choose a direction.').notEmpty();
 
   var errors = req.validationErrors();
@@ -49,7 +50,7 @@ var checkUsername = function(req, res){
         var i=0;
         for (var j=1; j< howManyDays; j++) {
           while (campsites.campsiteData[i].milesFromSouth < j*211.4/howManyDays) {
-            i++;        
+            i++;
           }
           itineraryArray.push(campsites.campsiteData[i].campsiteName);
         }
@@ -57,10 +58,10 @@ var checkUsername = function(req, res){
         var i=howManySites-1;
         for (var j=howManyDays-1; j>0; j--) {
           while (campsites.campsiteData[i].milesFromSouth > j*211.4/howManyDays) {
-            i--;        
+            i--;
           }
           itineraryArray.push(campsites.campsiteData[i].campsiteName);
-        }        
+        }
       }
 
       var user = new User({
