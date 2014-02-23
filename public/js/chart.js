@@ -6,11 +6,10 @@ d3.json("/campsiteData.json", function(error, json) {
     data = json.campsiteData;
   
   console.log("Data = ", data);
-var w = 700;
+var w = 900;
 var h = 450;
-var margin = 30;
+var margin = 20;
 
-//var ymax = d3.max(data);//, function(d,i) { console.log("d= ", d, "i = ", i); } );
 var ymax = 13000;
 var xmax = 300;
 
@@ -24,7 +23,7 @@ var vis = d3.select(".lead")
     .attr("height", h)
  
 var g = vis.append("svg:g")
-    .attr("transform", "translate(0, 400)");
+    .attr("transform", "translate(100,500)");
 
 var line = d3.svg.line()
     .x(function(d,i) { return x(d.milesFromSouth) })
@@ -93,7 +92,7 @@ function yy(d) { return -1 * y(d.elevation); };
  .attr("r", 5)
  .attr("cx", xx)
  .attr("cy", yy)
- .on("mouseover", function(d) { showData(this, d.trendingValue);})
+ .on("mouseover", function(d) { showData(this, d.campsiteName);})
  .on("mouseout", function(){ hideData();});
  
  g.append("svg:path").attr("d", line(data));
@@ -105,7 +104,19 @@ function yy(d) { return -1 * y(d.elevation); };
  .text("Trending Value");
  
 
-
+function showData(obj, d) {
+ var coord = d3.mouse(obj);
+ var infobox = d3.select(".infobox");
+ // now we just position the infobox roughly where our mouse is
+ infobox.style("left", (coord[0] + 100) + "px" );
+ infobox.style("top", (coord[1] - 175) + "px");
+ $(".infobox").html(d);
+ $(".infobox").show();
+ }
+ 
+function hideData() {
+ $(".infobox").hide();
+ }
 
 
 

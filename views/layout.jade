@@ -13,8 +13,9 @@ html
   body
     #wrap
       include partials/navigation
-      .container-fluid
-        include partials/flash
+      if index
+        .container-fluid 
+          include partials/flash
       .container-fluid
         block content
     include partials/footer
