@@ -6,7 +6,7 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='')
     meta(name='author', content='')
-    title #{title} - AutoBlogger
+    title #{title} - JMT Blogger
     != css('styles')
     != js('application')
   body
@@ -14,5 +14,6 @@ html
       include partials/navigation
       .container-fluid
         include partials/flash
+      .container-fluid
         block content
     include partials/footer

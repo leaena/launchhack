@@ -96,7 +96,6 @@ app.use(express.errorHandler());
 //Custom expressValidator for start and end date.
 expressValidator.Validator.prototype.dateRange = function(start) {
   //You could validate against this.str, instead of just erroring out.
-  console.log(this);
   if(new Date(start) < new Date(this.str)){
     return this;
   }
@@ -111,7 +110,7 @@ expressValidator.Validator.prototype.dateRange = function(start) {
 app.get('/', homeController.index);
 app.post('/setItinerary', accountController.checkAccount);
 app.get('/itinerary/:username', itineraryController.index);
-app.get('/today/:username/:date', todayController.index);
+app.get('/blog/:username/:date', todayController.index);
 
 /*
 user = usercontroller
